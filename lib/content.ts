@@ -101,7 +101,7 @@ export const SPHERES: SphereContent[] = [
     layer: "Hydrosphere",
     altitude: "SUBMARINE DEPTH  //  PRESSURISED",
     heading: "In the deepest silence.",
-    body: "The ground gives way to ocean. A submarine moves through the blue-black depth, lit only by the faint glow of its own systems. Fibre-optic cables shimmer alongside the familiar wiring thread.",
+    body: "The ground gives way to ocean. A submarine moves through the blue-black depth, lit only by the faint glow of its own systems. Fibre-optic cables and pressurised wiring run through the hull — the same precision, now built to hold against the deep.",
     quote: "In the deepest silence, our systems still speak.",
     proof: [
       { name: "Naval EWIS", sub: "Pressurised reliability" },

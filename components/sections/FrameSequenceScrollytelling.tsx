@@ -35,9 +35,17 @@ export interface FrameSequenceProps {
   /** 1-indexed frame shown in the reduced-motion / static fallback */
   reducedFrame?: number;
   reducedAlt: string;
+  /**
+   * Scroll distance (in vh) allotted to each frame. Higher = the sequence
+   * scrubs more slowly. Section height = totalFrames × this. Default 3.5
+   * gives a slow, deliberate cinematic scrub; keeps pacing identical across
+   * chapters regardless of frame count.
+   */
+  vhPerFrame?: number;
 }
 
 const BATCH_SIZE = 20;
+const DEFAULT_VH_PER_FRAME = 3.5;
 
 /* ─── helpers ──────────────────────────────────────────────────────── */
 
@@ -79,7 +87,9 @@ export default function FrameSequenceScrollytelling({
   proof,
   reducedFrame,
   reducedAlt,
+  vhPerFrame = DEFAULT_VH_PER_FRAME,
 }: FrameSequenceProps) {
+  const sectionVh = Math.round(totalFrames * vhPerFrame);
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<(HTMLImageElement | null)[]>(
@@ -254,7 +264,12 @@ export default function FrameSequenceScrollytelling({
   /* ─── main render ───────────────────────────────────────────────── */
 
   return (
-    <section id={sectionId} ref={sectionRef} className="satellite-section relative">
+    <section
+      id={sectionId}
+      ref={sectionRef}
+      className="satellite-section relative"
+      style={{ height: `${sectionVh}vh` }}
+    >
       <div className="satellite-sticky">
         <canvas ref={canvasRef} className="satellite-canvas" aria-hidden />
 
