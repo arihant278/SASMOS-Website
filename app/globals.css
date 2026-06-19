@@ -1,26 +1,166 @@
 @import "tailwindcss";
 
+/*
+  SASMOS — "Instrument Panel / Telemetry" design system.
+  Dark, engineered defence-aerospace feel. Palette shifts per sphere.
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* base ink */
+  --void: #04060d;
+  --ink: #070a14;
+  --panel: #0c1120;
+  --line: rgba(140, 170, 220, 0.14);
+  --line-strong: rgba(150, 190, 240, 0.32);
+
+  --fg: #e7eefc;
+  --fg-dim: #9fb0cf;
+  --fg-faint: #5f7398;
+
+  /* the unifying harness glow — hue-shifts per sphere via --glow */
+  --glow: #7fe9ff;
+  --glow-soft: rgba(127, 233, 255, 0.5);
+
+  /* per-sphere accents (used by JS to drive --glow & backgrounds) */
+  --space-bg: #04060f;
+  --space-glow: #8fe6ff;
+
+  --sky-bg: #0a1626;
+  --sky-glow: #acd4ff;
+
+  --land-bg: #0d0a07;
+  --land-glow: #ff8a3c;
+
+  --sea-bg: #02070f;
+  --sea-glow: #2ff0cf;
+
+  --bg: var(--space-bg);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-void: var(--void);
+  --color-ink: var(--ink);
+  --color-panel: var(--panel);
+  --color-fg: var(--fg);
+  --color-fg-dim: var(--fg-dim);
+  --color-fg-faint: var(--fg-faint);
+  --color-glow: var(--glow);
+
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--void);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Lenis hooks into native scroll; keep default scroll for SSR/no-JS */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--void);
+  color: var(--fg);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--glow);
+  color: #03060c;
+}
+
+/* thin custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 99px;
+}
+
+/* ---- type utilities ---- */
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.mono {
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--glow);
+}
+
+.display-xl {
+  font-size: clamp(2.6rem, 8vw, 7.5rem);
+}
+.display-lg {
+  font-size: clamp(2.2rem, 6vw, 5rem);
+}
+
+/* glow text */
+.glow-text {
+  text-shadow: 0 0 24px var(--glow-soft);
+}
+
+/* thin grid hairlines / instrument frame */
+.hairline {
+  border-color: var(--line);
+}
+
+/* reveal helpers (used as ScrollTrigger targets, also work as fallback) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.reveal-on {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* grain overlay */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
 }
