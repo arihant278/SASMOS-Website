@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
-import Background from "@/components/canvas/Background";
 import Nav from "@/components/Nav";
 import SphereProgress from "@/components/SphereProgress";
 import Preloader from "@/components/Preloader";
@@ -39,7 +38,14 @@ export default function RootLayout({
     >
       <body>
         <Preloader />
-        <Background />
+        {/* palette-driven backdrop for chapters without a frame sequence
+            (intro, land, sea, timeline, people, return). The image-sequence
+            sections paint their own opaque canvas on top of this. */}
+        <div
+          aria-hidden
+          className="fixed inset-0 z-0"
+          style={{ background: "var(--bg)", transition: "background 0.6s linear" }}
+        />
         <SmoothScroll>
           <Nav />
           <SphereProgress />

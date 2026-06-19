@@ -1,4 +1,6 @@
 import Hero from "@/components/sections/Hero";
+import SatelliteScrollytelling from "@/components/sections/SatelliteScrollytelling";
+import JetScrollytelling from "@/components/sections/JetScrollytelling";
 import SphereSection from "@/components/sections/SphereSection";
 import Timeline from "@/components/sections/Timeline";
 import People from "@/components/sections/People";
@@ -7,14 +9,17 @@ import Footer from "@/components/Footer";
 import { SPHERES } from "@/lib/content";
 
 export default function Home() {
-  // SPHERES[0] (space) is rendered inside Hero; sky/land/sea use SphereSection.
-  const [, ...rest] = SPHERES;
+  // space → Satellite Sequence, sky → Jet Sequence.
+  // land/sea keep the SphereSection layout until their sequences are produced.
+  const land = SPHERES[2];
+  const sea = SPHERES[3];
   return (
     <>
       <Hero />
-      {rest.map((s, i) => (
-        <SphereSection key={s.id} data={s} index={i + 1} />
-      ))}
+      <SatelliteScrollytelling />
+      <JetScrollytelling />
+      <SphereSection data={land} index={2} />
+      <SphereSection data={sea} index={3} />
       <Timeline />
       <People />
       <ReturnToSpace />
