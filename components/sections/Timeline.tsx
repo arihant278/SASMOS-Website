@@ -2,20 +2,29 @@
 
 import { useEffect, useRef } from "react";
 import { MILESTONES } from "@/lib/content";
+import { mix } from "@/lib/palette";
 import { registerGsap, gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+
+// We descend out of the sea chapter: the section opens on the last sea frame's
+// tone and darkens into the abyss as you scroll deeper through time.
+const SEA_SURFACE = "#16232c"; // avg colour of the final sea frame
+const ABYSS = "#02060c";
 
 export default function Timeline() {
   const pinRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
     registerGsap();
     const pin = pinRef.current;
     const track = trackRef.current;
-    if (!pin || !track) return;
+    const fill = fillRef.current;
+    if (!pin || !track || !fill) return;
 
     const ctx = gsap.context(() => {
+      const dots = gsap.utils.toArray<HTMLElement>(".tl-dot");
       const distance = track.scrollWidth - window.innerWidth;
       const tween = gsap.to(track, {
         x: -distance,
@@ -29,6 +38,18 @@ export default function Timeline() {
         scrub: 1,
         animation: tween,
         invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const p = self.progress;
+          // glowing fill advances left → right with scroll
+          fill.style.transform = `scaleX(${p})`;
+          // each dot lights as the fill reaches it
+          dots.forEach((d, i) => {
+            const pos = dots.length > 1 ? i / (dots.length - 1) : 0;
+            d.classList.toggle("is-active", p >= pos - 0.015);
+          });
+          // descend into deeper, darker water
+          pin.style.backgroundColor = mix(SEA_SURFACE, ABYSS, p);
+        },
       });
 
       // reveal each card as it scrolls toward centre
@@ -50,8 +71,13 @@ export default function Timeline() {
   }, []);
 
   return (
-    <section id="history" ref={pinRef} className="relative overflow-hidden">
-      <div className="flex min-h-screen flex-col justify-center">
+    <section
+      id="history"
+      ref={pinRef}
+      className="relative overflow-hidden"
+      style={{ backgroundColor: SEA_SURFACE }}
+    >
+      <div className="flex min-h-screen flex-col justify-center py-20">
         <div className="px-6 md:px-16">
           <div className="mx-auto max-w-[1400px]">
             <span className="eyebrow">Our History</span>
@@ -87,8 +113,27 @@ export default function Timeline() {
           ))}
         </div>
 
-        <div className="mt-12 px-6 md:px-16">
-          <span className="mono text-[10px] text-fg-faint">SCROLL TO ADVANCE THROUGH TIME →</span>
+        {/* horizontal depth/progress bar — glows as each milestone is reached */}
+        <div className="mt-14 px-6 md:px-16">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="tl-progress">
+              <div className="tl-progress-fill" ref={fillRef} />
+              {MILESTONES.map((m, i) => (
+                <div
+                  key={m.year}
+                  className="tl-node"
+                  style={{ left: `${MILESTONES.length > 1 ? (i / (MILESTONES.length - 1)) * 100 : 0}%` }}
+                >
+                  <span className="tl-dot" />
+                  <span className="tl-node-year mono">{m.year}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-10 flex items-center justify-between">
+              <span className="mono text-[10px] text-fg-faint">2007 — PRESENT</span>
+              <span className="mono text-[10px] text-fg-faint">SCROLL TO DESCEND THROUGH TIME →</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

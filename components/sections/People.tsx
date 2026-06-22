@@ -7,7 +7,11 @@ import Reveal from "@/components/Reveal";
  *  grid of headshots. */
 export default function People() {
   return (
-    <section id="people" className="relative px-6 py-32 md:px-16 md:py-48">
+    <section
+      id="people"
+      className="relative px-6 py-32 md:px-16 md:py-48"
+      style={{ background: "linear-gradient(180deg, #02060c 0%, #01040a 100%)" }}
+    >
       <div className="mx-auto max-w-[1100px]">
         <Reveal>
           <span className="eyebrow">The People</span>

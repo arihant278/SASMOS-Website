@@ -16,14 +16,12 @@ export default function SphereProgress() {
   useEffect(() => {
     let raf = 0;
     const tick = () => {
-      const p = scrollState.progress;
-      // journey occupies first ~0.55 of the page
-      const jp = Math.min(1, p / 0.55);
+      // The film reports its own progress + active chapter (chapter-exact),
+      // so the meter matches the frame on screen regardless of page layout.
+      const jp = Math.min(1, Math.max(0, scrollState.journeyProgress));
       if (fillRef.current) fillRef.current.style.height = `${jp * 100}%`;
-      let idx = 0;
-      SPHERE_ANCHORS.forEach((a, i) => {
-        if (p >= a.at - 0.04) idx = i;
-      });
+      let idx = SPHERE_ANCHORS.findIndex((a) => a.id === scrollState.sphere);
+      if (idx < 0) idx = 0;
       setActive((prev) => (prev !== idx ? idx : prev));
       raf = requestAnimationFrame(tick);
     };

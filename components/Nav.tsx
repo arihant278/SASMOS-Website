@@ -6,9 +6,16 @@ import { NAV_LINKS } from "@/lib/content";
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // The hero reads stronger uncluttered: links stay hidden over it and only
+  // surface once the visitor scrolls past the opening screen.
+  const [pastHero, setPastHero] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      setPastHero(y > window.innerHeight * 0.82);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
@@ -35,7 +42,16 @@ export default function Nav() {
           </span>
         </a>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav
+          className="hidden items-center gap-7 md:flex"
+          aria-hidden={!pastHero}
+          style={{
+            opacity: pastHero ? 1 : 0,
+            pointerEvents: pastHero ? "auto" : "none",
+            transform: pastHero ? "none" : "translateY(-6px)",
+            transition: "opacity 0.5s ease, transform 0.5s ease",
+          }}
+        >
           {NAV_LINKS.map((l) => (
             <a
               key={l.href}
@@ -58,6 +74,12 @@ export default function Nav() {
           onClick={() => setOpen((v) => !v)}
           className="mono text-[11px] text-fg-dim md:hidden"
           aria-label="Toggle menu"
+          aria-hidden={!pastHero}
+          style={{
+            opacity: pastHero ? 1 : 0,
+            pointerEvents: pastHero ? "auto" : "none",
+            transition: "opacity 0.5s ease",
+          }}
         >
           {open ? "CLOSE" : "MENU"}
         </button>

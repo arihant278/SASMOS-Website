@@ -4,8 +4,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="relative z-10 border-t px-6 py-16 md:px-10"
-      style={{ borderColor: "var(--line)", background: "rgba(4,6,13,0.7)", backdropFilter: "blur(8px)" }}
+      className="site-footer px-6 py-16 md:px-10"
     >
       <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>

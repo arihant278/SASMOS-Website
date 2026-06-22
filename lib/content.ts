@@ -15,9 +15,10 @@ export type SphereContent = {
 
 export const INTRO = {
   eyebrow: "SASMOS HET Technologies",
-  line1: "From the sea, the land,",
-  line2: "the air — to space.",
-  tagline: "Delivering high-end, high-quality engineering solutions from Sea to Space.",
+  line1: "The connections that hold,",
+  line2: "from sea to space.",
+  tagline:
+    "We build the wiring, connectors, and precision assemblies inside the world's most demanding machines — across Defence, Aerospace, Space and Marine.",
   blurb:
     "We build the wiring, the connectors, and the precision assemblies that go inside satellites, fighter jets, naval submarines, and defence systems. This is the journey through the four environments our products call home.",
 };

@@ -30,11 +30,23 @@ function rgbToHex(r: number, g: number, b: number) {
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
-function mix(a: string, b: string, t: number) {
+export function mix(a: string, b: string, t: number) {
   const A = hexToRgb(a);
   const B = hexToRgb(b);
   return rgbToHex(lerp(A[0], B[0], t), lerp(A[1], B[1], t), lerp(A[2], B[2], t));
 }
+
+// Per-chapter palette, used by <CinematicJourney> to drive --bg/--glow and the
+// depth meter directly from the film's own progress (chapter-exact, immune to
+// page-layout changes). Glows are chosen to read on the lower-third scrim.
+export const CHAPTER_PALETTE: Record<SphereId, { bg: string; glow: string }> = {
+  space: { bg: "#04060f", glow: "#8fe6ff" },
+  sky: { bg: "#0a1626", glow: "#7cc4ff" },
+  land: { bg: "#0d0a07", glow: "#ff8a3c" },
+  sea: { bg: "#02070f", glow: "#2ff0cf" },
+};
+// what the sea chapter cross-fades toward as the film ends (history/tail)
+export const POST_JOURNEY = { bg: "#060814", glow: "#6fb6ff" };
 
 export function sampleRamp(p: number): { bg: string; glow: string; sphere: SphereId } {
   const x = Math.min(1, Math.max(0, p));

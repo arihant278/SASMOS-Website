@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import { registerGsap, gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
-import { setProgress } from "@/lib/scroll";
+import { setProgress, scrollState } from "@/lib/scroll";
 import { sampleRamp } from "@/lib/palette";
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
@@ -22,7 +22,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? window.scrollY / max : 0;
       setProgress(p);
-      applyPalette(p);
+      // While the cinematic film is on screen it owns --bg/--glow chapter-exact
+      // (see CinematicJourney). Outside it, the global ramp handles hero + tail.
+      if (!scrollState.journeyActive) applyPalette(p);
     };
 
     if (reduced) {

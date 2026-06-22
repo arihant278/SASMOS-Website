@@ -1,23 +1,18 @@
 import Hero from "@/components/sections/Hero";
-import SatelliteScrollytelling from "@/components/sections/SatelliteScrollytelling";
-import JetScrollytelling from "@/components/sections/JetScrollytelling";
-import LandScrollytelling from "@/components/sections/LandScrollytelling";
-import SeaScrollytelling from "@/components/sections/SeaScrollytelling";
+import CinematicJourney from "@/components/sections/CinematicJourney";
 import Timeline from "@/components/sections/Timeline";
 import People from "@/components/sections/People";
 import ReturnToSpace from "@/components/sections/ReturnToSpace";
 import Footer from "@/components/Footer";
+import { JOURNEY_CHAPTERS } from "@/lib/journey-content";
 
 export default function Home() {
-  // space → Satellite Sequence, sky → Jet Sequence,
-  // land → Land Sequence, sea → water sequence.
+  // One continuous film: Space → Sky → Land → Sea scrubbed across a single
+  // canvas (no per-section seams). Then history, people, return to space.
   return (
     <>
       <Hero />
-      <SatelliteScrollytelling />
-      <JetScrollytelling />
-      <LandScrollytelling />
-      <SeaScrollytelling />
+      <CinematicJourney chapters={JOURNEY_CHAPTERS} />
       <Timeline />
       <People />
       <ReturnToSpace />
