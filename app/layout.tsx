@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/providers/SmoothScroll";
 import Nav from "@/components/Nav";
 import SphereProgress from "@/components/SphereProgress";
 import Preloader from "@/components/Preloader";
+import BackToTop from "@/components/BackToTop";
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -49,6 +50,7 @@ export default function RootLayout({
         <SmoothScroll>
           <Nav />
           <SphereProgress />
+          <BackToTop />
           <main className="relative z-10">{children}</main>
         </SmoothScroll>
       </body>

@@ -13,7 +13,7 @@ export default function Hero() {
           so the hero opens immersed and hands off seamlessly into the
           satellite sequence that follows. */}
       <img
-        src="/Satellite Sequence/00001.png"
+        src="/outer_space_hero.png"
         alt=""
         aria-hidden
         className="hero-bg absolute inset-0 h-full w-full object-cover"
@@ -74,17 +74,7 @@ export default function Hero() {
           {INTRO.tagline}
         </p>
 
-        {/* telemetry strip — small proof, instrument-panel style */}
-        <div
-          className="hero-reveal mono mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] text-fg-faint"
-          style={{ animationDelay: "0.85s" }}
-        >
-          <span>EST. 2007 · BANGALORE</span>
-          <span className="hero-sep" />
-          <span>SEA → LAND → AIR → SPACE</span>
-          <span className="hero-sep" />
-          <span>AS9100 CERTIFIED</span>
-        </div>
+
       </div>
 
       {/* ── corner readouts */}

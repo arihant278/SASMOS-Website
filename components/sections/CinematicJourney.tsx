@@ -210,14 +210,29 @@ export default function CinematicJourney({
     const canvas = canvasRef.current;
     if (!canvas) return;
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas!.width = window.innerWidth * dpr;
-      canvas!.height = window.innerHeight * dpr;
+      // Source frames are 1280×720. Limit the canvas buffer so we never
+      // stretch a 720p image across a much larger pixel grid — the main
+      // cause of the soft/blurry look on high-DPI screens.
+      const nativeDpr = window.devicePixelRatio || 1;
+      // On a 1920-wide display, dpr 1 already matches the frames well.
+      // On a 2560+ display we allow a mild upscale (1.25×) but no more.
+      const maxBufferWidth = 1920;
+      const effectiveDpr = Math.min(
+        nativeDpr,
+        maxBufferWidth / window.innerWidth,
+      );
+      const dpr = Math.max(1, effectiveDpr);
+
+      canvas!.width = Math.round(window.innerWidth * dpr);
+      canvas!.height = Math.round(window.innerHeight * dpr);
       canvas!.style.width = `${window.innerWidth}px`;
       canvas!.style.height = `${window.innerHeight}px`;
+
       const img = imagesRef.current[currentFrameRef.current];
       const ctx = canvas!.getContext("2d");
       if (ctx && img) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas!.width, canvas!.height);
         drawFrame(ctx, img, canvas!.width, canvas!.height);
@@ -246,6 +261,11 @@ export default function CinematicJourney({
     if (!img) return;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Force high-quality upscaling for high-DPI/Retina displays
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    
     drawFrame(ctx, img, canvas.width, canvas.height);
   }, []);
 

@@ -20,7 +20,7 @@ const [space, sky, land, sea] = SPHERES;
 export const JOURNEY_CHAPTERS: JourneyChapter[] = [
   {
     id: "space",
-    sequenceDir: "Satellite Sequence",
+    sequenceDir: "Satellite Sequence 1",
     totalFrames: 240,
     reducedFrame: 200,
     reducedAlt: "SASMOS satellite in orbit above Earth",
@@ -58,7 +58,7 @@ export const JOURNEY_CHAPTERS: JourneyChapter[] = [
   },
   {
     id: "sky",
-    sequenceDir: "Jet Sequence",
+    sequenceDir: "Jet Sequence 1",
     totalFrames: 240,
     reducedFrame: 220,
     reducedAlt: "Airliner carrying SASMOS interconnection systems at cruise altitude",
@@ -132,7 +132,7 @@ export const JOURNEY_CHAPTERS: JourneyChapter[] = [
   },
   {
     id: "sea",
-    sequenceDir: "water sequence",
+    sequenceDir: "water sequence 1",
     totalFrames: 240,
     reducedFrame: 200,
     reducedAlt: "Submarine carrying SASMOS naval interconnection systems gliding through deep water",

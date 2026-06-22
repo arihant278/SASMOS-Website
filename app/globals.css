@@ -405,3 +405,10 @@ body {
   }
 }
 
+/* Force-hide injected preview watermarks */
+[id*="gemini"], [class*="gemini"], [id*="watermark"] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}

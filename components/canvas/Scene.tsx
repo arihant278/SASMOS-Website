@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useEffect } from "react";
 import * as THREE from "three";
 import { scrollState } from "@/lib/scroll";
 import { sampleRamp } from "@/lib/palette";
@@ -41,12 +41,16 @@ function Rig({ reduced }: { reduced: boolean }) {
     }
   });
 
-  if (typeof window !== "undefined" && !reduced) {
-    window.onpointermove = (e) => {
-      pointer.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
-      pointer.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
-    };
-  }
+  useEffect(() => {
+    if (!reduced) {
+      const handlePointerMove = (e: PointerEvent) => {
+        pointer.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
+        pointer.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+      };
+      window.addEventListener("pointermove", handlePointerMove);
+      return () => window.removeEventListener("pointermove", handlePointerMove);
+    }
+  }, [reduced]);
 
   return null;
 }
