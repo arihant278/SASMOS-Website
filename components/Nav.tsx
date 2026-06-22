@@ -32,14 +32,7 @@ export default function Nav() {
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 md:px-10">
         <a href="#top" className="group flex items-center gap-3">
-          <span
-            className="inline-block h-2 w-2 rounded-full"
-            style={{ background: "var(--glow)", boxShadow: "0 0 12px var(--glow)" }}
-          />
-          <span className="font-display text-lg tracking-tight text-fg">SASMOS</span>
-          <span className="mono hidden text-[10px] text-fg-faint sm:inline">
-            HET TECHNOLOGIES
-          </span>
+          <img src="/sasmos-logo.png" alt="SASMOS" className="h-8 w-auto object-contain" />
         </a>
 
         <nav

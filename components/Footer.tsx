@@ -8,7 +8,7 @@ export default function Footer() {
     >
       <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <div className="font-display text-3xl tracking-tight text-fg">SASMOS</div>
+          <img src="/sasmos-logo.png" alt="SASMOS" className="h-10 w-auto object-contain" />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-fg-dim">
             High-reliability interconnection systems and electromechanical assemblies
             for the world&apos;s most demanding environments — on earth and beyond it.

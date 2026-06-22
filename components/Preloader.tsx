@@ -31,7 +31,7 @@ export default function Preloader() {
     >
       <div className="flex w-[min(80vw,420px)] flex-col gap-4">
         <div className="flex items-baseline justify-between">
-          <span className="font-display text-2xl tracking-tight text-fg">SASMOS</span>
+          <img src="/sasmos-logo.png" alt="SASMOS" className="h-8 w-auto object-contain" />
           <span className="mono text-[11px] text-glow">{pct}%</span>
         </div>
         <div className="h-px w-full" style={{ background: "var(--line)" }}>

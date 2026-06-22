@@ -7,7 +7,8 @@ export default function BackToTop() {
 
   useEffect(() => {
     const onScroll = () => {
-      setVisible(window.scrollY > 200);
+      // Show button only after scrolling past 80% of the viewport (past the hero)
+      setVisible(window.scrollY > window.innerHeight * 0.8);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -21,7 +22,9 @@ export default function BackToTop() {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-4 right-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full transition-transform duration-300 hover:scale-105 opacity-100`}
+      className={`fixed bottom-4 right-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 hover:scale-105 ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+      }`}
       style={{
         background: "#0a1626", // Deep dark-blue background
         border: "1px solid rgba(255, 255, 255, 0.1)",

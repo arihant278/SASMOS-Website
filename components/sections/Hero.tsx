@@ -52,7 +52,7 @@ export default function Hero() {
           {INTRO.eyebrow}
         </span>
 
-        <h1 className="font-display display-xl glow-text mt-6 max-w-5xl text-fg">
+        <h1 className="font-display display-lg glow-text mt-6 max-w-5xl text-fg">
           <span
             className="hero-reveal block"
             style={{ animationDelay: "0.35s" }}
@@ -74,7 +74,29 @@ export default function Hero() {
           {INTRO.tagline}
         </p>
 
-
+        <div
+          className="hero-reveal mt-12 flex items-center justify-center gap-6"
+          style={{ animationDelay: "0.85s" }}
+        >
+          <a
+            href="#space"
+            className="mono rounded-full px-7 py-3.5 text-[12px] font-medium transition-all hover:scale-105"
+            style={{
+              background: "var(--glow)",
+              color: "#000",
+              boxShadow: "0 0 20px rgba(239, 107, 1, 0.4)",
+            }}
+          >
+            Discover Capabilities
+          </a>
+          <a
+            href="#contact"
+            className="mono rounded-full border px-7 py-3.5 text-[12px] transition-colors hover:border-glow hover:text-glow"
+            style={{ borderColor: "var(--line-strong)" }}
+          >
+            Partner With Us
+          </a>
+        </div>
       </div>
 
       {/* ── corner readouts */}

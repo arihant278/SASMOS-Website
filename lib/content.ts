@@ -16,7 +16,7 @@ export type SphereContent = {
 export const INTRO = {
   eyebrow: "SASMOS HET Technologies",
   line1: "The connections that hold,",
-  line2: "from sea to space.",
+  line2: "from space to sea.",
   tagline:
     "We build the wiring, connectors, and precision assemblies inside the world's most demanding machines — across Defence, Aerospace, Space and Marine.",
   blurb:
@@ -112,13 +112,12 @@ export const SPHERES: SphereContent[] = [
 ];
 
 export const MILESTONES = [
-  { year: "2007", title: "Incorporated in Bangalore", body: "Founded by precision-engineering and interconnection experts to revolutionise India's Aerospace & Defence supply chain." },
-  { year: "2010", title: "Tier-1 aerospace partnerships", body: "First long-term programs with global primes — Boeing & Lockheed Martin among them." },
-  { year: "2014", title: "61% CAGR, first decade", body: "Rapid growth into a 150,000 sq ft facility delivering 150+ programs a year." },
-  { year: "2017", title: "Deutsche Aircraft — D328eco", body: "Selected for high-reliability interconnection on next-generation regional aircraft." },
-  { year: "2019", title: "AVIRATA Defence Systems", body: "A dedicated land & defence-electronics entity is born." },
-  { year: "2021", title: "An international network", body: "Operations span India, the UK, the US, Netherlands & Morocco." },
-  { year: "2024", title: "One SASMOS Group", body: "Glodesi, FESIL, LiDER & Westwire unify under one platform." },
+  { year: "2007 - 2009", title: "Inception & Certification", body: "Incorporated with a vision to lead global A&D. Secured AS9100 certification and obtained an industrial license from DIPP." },
+  { year: "2010 - 2012", title: "Early Expansion", body: "Crossed $1M in revenue. Expanded into missile platforms, added European customers, and set up a 10,000 sq ft UAM cleanroom." },
+  { year: "2013 - 2015", title: "Space & Commercial Growth", body: "Awarded best supplier for a global space program. Entered commercial aircraft wiring with Fokker Aero and crossed $10M in revenue." },
+  { year: "2016 - 2018", title: "Scaling Operations", body: "Expanded production to 100,000 sq ft. Initiated digital transformation and established a UK sales office for global outreach." },
+  { year: "2019 - 2020", title: "Diversification & $50M", body: "Set up AVIRATA Defence and SCTO Fiber Optic divisions. Crossed $50M in revenue and launched a Center of Excellence (CoE)." },
+  { year: "2021 - 2022", title: "Acquisitions & New Plants", body: "Acquired UK-based Westwire and inaugurated the AVIRATA Pune Plant to further strengthen global delivery capabilities." },
 ];
 
 export const PEOPLE = [
@@ -162,10 +161,8 @@ export const LOCATIONS = [
 ];
 
 export const NAV_LINKS = [
-  { label: "Space", href: "#space" },
-  { label: "Sky", href: "#sky" },
-  { label: "Land", href: "#land" },
-  { label: "Sea", href: "#sea" },
+  { label: "Capabilities", href: "#space" }, // Links into the cinematic journey
+  { label: "Sectors", href: "#sky" },
   { label: "History", href: "#history" },
-  { label: "People", href: "#people" },
+  { label: "Leadership", href: "#people" },
 ];
