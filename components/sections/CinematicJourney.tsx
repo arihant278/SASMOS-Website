@@ -124,6 +124,7 @@ export default function CinematicJourney({
   );
   const currentFrameRef = useRef(0);
   const rafRef = useRef<number>(0);
+  const loadedBatchesRef = useRef<Set<number>>(new Set());
 
   const [loadProgress, setLoadProgress] = useState(0);
   const [isReady, setIsReady] = useState(false);
@@ -135,7 +136,7 @@ export default function CinematicJourney({
   const frameSrc = useCallback(
     (globalIndex: number) => {
       const f = frames[globalIndex];
-      return `/${f.dir}/${pad(f.local)}.png`;
+      return `/${f.dir}/${pad(f.local)}.webp`;
     },
     [frames],
   );
@@ -187,22 +188,41 @@ export default function CinematicJourney({
     }
 
     let cancelled = false;
-    async function preload() {
+    async function preloadInitial() {
+      loadedBatchesRef.current.add(0);
       await loadBatch(0, BATCH_SIZE);
       if (cancelled) return;
+      
+      const chapterFirstFrames = chapterStarts.filter(start => start > 0);
+      await Promise.all(chapterFirstFrames.map(f => loadImage(f)));
+
       setLoadProgress(Math.min(BATCH_SIZE, totalFrames) / totalFrames);
       setIsReady(true);
-      for (let start = BATCH_SIZE; start < totalFrames; start += BATCH_SIZE) {
-        if (cancelled) return;
-        await loadBatch(start, start + BATCH_SIZE);
-        setLoadProgress(Math.min(start + BATCH_SIZE, totalFrames) / totalFrames);
-      }
     }
-    preload();
+    preloadInitial();
     return () => {
       cancelled = true;
     };
-  }, [loadBatch, totalFrames]);
+  }, [loadBatch, totalFrames, chapterStarts, loadImage]);
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (isReducedMotion || !isReady) return;
+    
+    const currentFrame = Math.round(v * lastFrame);
+    const PRELOAD_AHEAD = 100;
+    const targetFrame = Math.min(totalFrames, currentFrame + PRELOAD_AHEAD);
+    
+    const currentBatchIdx = Math.floor(currentFrame / BATCH_SIZE);
+    const targetBatchIdx = Math.floor(targetFrame / BATCH_SIZE);
+
+    for (let b = currentBatchIdx; b <= targetBatchIdx; b++) {
+      if (!loadedBatchesRef.current.has(b)) {
+        loadedBatchesRef.current.add(b);
+        const start = b * BATCH_SIZE;
+        loadBatch(start, start + BATCH_SIZE).catch(console.error);
+      }
+    }
+  });
 
   /* ─── canvas sizing ─────────────────────────────────────────────── */
 
